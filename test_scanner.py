@@ -11,7 +11,7 @@ class ScanDelegate(DefaultDelegate):
             print ("Received new data from", dev.addr)
 
 scanner = Scanner().withDelegate(ScanDelegate())
-devices = scanner.scan(10.0)
+devices = scanner.scan(10.0,passive=True)
 
 for dev in devices:
     print ("Device %s (%s), RSSI=%d dB" % (dev.addr, dev.addrType, dev.rssi))

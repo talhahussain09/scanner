@@ -30,5 +30,6 @@ for dev in devices:
         print("data type of adtype is", type(adtype), "and its value is", adtype)
         print("data type of desc is", type(desc), "and its value is", desc)
         print("data type of value is", type(value), "and its value is", value)
-        a = [adtype,desc,value]
+        a = [desc,value]
+        client.publish('raspberry/topic', payload=a, qos=0, retain=False)
         

@@ -1,10 +1,11 @@
 from bluepy.btle import Scanner, DefaultDelegate
 import paho.mqtt.client as mqtt
 
-client = mqtt.Client()
-client.on_connect = on_connect
-client.connect("broker.emqx.io", 1883, 60)
-
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected success")
+    else:
+        print(f"Connected fail with code {rc}")
 
 class ScanDelegate(DefaultDelegate):
     def __init__(self):
@@ -15,6 +16,9 @@ class ScanDelegate(DefaultDelegate):
             print ("Discovered device", dev.addr)
         elif isNewData:
             print ("Received new data from", dev.addr)
+client = mqtt.Client()
+client.on_connect = on_connect
+client.connect("broker.emqx.io", 1883, 60)
 
 scanner = Scanner().withDelegate(ScanDelegate())
 devices = scanner.scan(10.0,passive=True)

@@ -1,5 +1,6 @@
 from bluepy.btle import Scanner, DefaultDelegate
 import paho.mqtt.client as mqtt
+import json
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -31,5 +32,6 @@ for dev in devices:
         print("data type of desc is", type(desc), "and its value is", desc)
         print("data type of value is", type(value), "and its value is", value)
         a = [desc,value]
-        client.publish('raspberry/topic', payload=adtype, qos=0, retain=False)
+        OutData = json.dumps(a)
+        client.publish('raspberry/topic', payload=OutData, qos=0, retain=False)
         
